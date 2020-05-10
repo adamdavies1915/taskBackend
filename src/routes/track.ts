@@ -1,6 +1,7 @@
 import express from 'express'
-import { getTrack, getTracksFromArtist } from '../models/data';
+import { getTrack, getTracksFromArtist, getAllTracks } from '../models/data';
 import { isString, isNumber } from '../utils/utils';
+import { check, validationResult }  from 'express-validator';
 
 export const trackRouter = express.Router();
 
@@ -10,17 +11,20 @@ trackRouter.get('/:id', (req, res, next) => {
         res.send(getTrack(trackId));
     }
     else {
-        throw new Error('trackId must be a number');
+        res.sendStatus(400)
     }
 });
 
 trackRouter.get('/',  (req, res, next) => {
     const artist = req.query.artist;
+    if ( artist === {} || !artist ) {
+        res.send(getAllTracks()); 
+    }
     if (isString(artist) && artist !== '') {
         res.send(getTracksFromArtist(artist));
     }
     else {
-        throw new Error('artist query must be a single string');
+        res.sendStatus(400)
     }
 });
 
