@@ -1,7 +1,6 @@
 import express from 'express'
-import { getTrack, getTracksFromArtist, getAllTracks } from '../models/data';
+import { getTrack, getTracksFromArtist, getAllTracks } from '../controllers/trackController';
 import { isString, isNumber } from '../utils/utils';
-import { check, validationResult }  from 'express-validator';
 
 export const trackRouter = express.Router();
 
